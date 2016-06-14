@@ -12,7 +12,7 @@ source ("SnowDepletionCurves/SDC_Statistics.R")
 #source("SnowDepletionCurves")
 #models<-list.dirs("Models",full.names=TRUE,recursive=FALSE)
 models<-list.dirs("../runs/syn_sdc",full.names=TRUE,recursive=FALSE)
-models<-models[!(models %in% c("../runs/syn_sdc/params","runs/syn_sdc/Routput"))]
+models<-models[!(models %in% c("../runs/syn_sdc/params","../runs/syn_sdc/Routput"))]
 
 #1 - Extract model output to dataframe
 for (model in models){
