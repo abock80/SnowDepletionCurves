@@ -1,21 +1,23 @@
-library(reshape2)
-library(dplyr)
+library(reshape2,lib.loc="/home/abock/R/x86_64-redhat-linux-gnu-library/3.3")
+library(dplyr,lib.loc="/home/abock/R/x86_64-redhat-linux-gnu-library/3.3")
 library(data.table)
-library(smwrBase)
+library(smwrBase,lib.loc="/home/abock/R/x86_64-redhat-linux-gnu-library/3.3")
 args<-commandArgs(TRUE)
 
 
 #setwd("d:/abock/SDC")
 setwd(".")
-#source ("SnowDepletionCurves/SDC_Statistics.R")
-source("SnowDepletionCurves")
+print(getwd())
+source ("SnowDepletionCurves/SDC_Statistics.R")
+#source("SnowDepletionCurves")
 #models<-list.dirs("Models",full.names=TRUE,recursive=FALSE)
-models<-list.dirs("runs/syn_sdc",full.names=TRUE,recursive=FALSE)
-models<-models[!(models %in% c("runs/syn_sdc/params","runs/syn_sdc/Routput"))]
+models<-list.dirs("../runs/syn_sdc",full.names=TRUE,recursive=FALSE)
+models<-models[!(models %in% c("../runs/syn_sdc/params","runs/syn_sdc/Routput"))]
 
 #1 - Extract model output to dataframe
 for (model in models){
-  modelname<-unlist(strsplit(model,"/"))[3]
+  print(strsplit(model,"/"))
+  modelname<-unlist(strsplit(model,"/"))[4]
   modelData1<-unlist(lapply(model,AnnualMax,1))
   modelData2<-unlist(lapply(model,AnnualMax,2))
   modelData3<-unlist(lapply(model,AnnualMax,3))
@@ -28,7 +30,7 @@ for (model in models){
                          "Total RO as melt during MeltPer","Total RO during MeltPer","Total CFS during MeltPer",
                          "Mean SWE/Melt Peak Date diff","SD SWE/Melt Peak Date","Mean SWE/RO Peak Date Diff","SD SWE/RO Peak Date Diff",
                          "Mean SWE/CFS Peak Date diff","SD SWE/CFS Peak Date diff")
-  write.csv(finalDat,paste("runs/syn_sdc/Routput/",modelname,".csv",sep=""),row.names=T)
+  write.csv(finalDat,paste("../runs/syn_sdc/Routput/",modelname,".csv",sep=""),row.names=T)
 }
 
 
