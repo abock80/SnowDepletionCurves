@@ -9,6 +9,7 @@ args<-commandArgs(TRUE)
 setwd(".")
 print(getwd())
 source ("SnowDepletionCurves/SDC_Statistics.R")
+source ("SnowDepletionCurves/Plot_SDC.R")
 #source("SnowDepletionCurves")
 #models<-list.dirs("Models",full.names=TRUE,recursive=FALSE)
 models<-list.dirs("../runs/syn_sdc",full.names=TRUE,recursive=FALSE)
@@ -17,20 +18,21 @@ models<-models[!(models %in% c("../runs/syn_sdc/params","../runs/syn_sdc/Routput
 #1 - Extract model output to dataframe
 for (model in models){
   print(strsplit(model,"/"))
-  modelname<-unlist(strsplit(model,"/"))[4]
-  modelData1<-unlist(lapply(model,AnnualMax,1))
-  modelData2<-unlist(lapply(model,AnnualMax,2))
-  modelData3<-unlist(lapply(model,AnnualMax,3))
-  modelData4<-unlist(lapply(model,AnnualMax,4))
-  modelData5<-unlist(lapply(model,AnnualMax,5))
-  modelData6<-unlist(lapply(model,AnnualMax,6))
-  modelData7<-unlist(lapply(model,AnnualMax,7))
-  finalDat<-cbind(modelData1,modelData2,modelData3,modelData4,modelData5,modelData6,modelData7)
-  row.names(finalDat)<-c("Melt Period Total# of Days","Mean Annual MeltPer Length","SDev Annual, MeltPer Length",
-                         "Total RO as melt during MeltPer","Total RO during MeltPer","Total CFS during MeltPer",
-                         "Mean SWE/Melt Peak Date diff","SD SWE/Melt Peak Date","Mean SWE/RO Peak Date Diff","SD SWE/RO Peak Date Diff",
-                         "Mean SWE/CFS Peak Date diff","SD SWE/CFS Peak Date diff")
-  write.csv(finalDat,paste("../runs/syn_sdc/Routput/",modelname,".csv",sep=""),row.names=T)
+  #modelname<-unlist(strsplit(model,"/"))[4]
+  #modelData1<-unlist(lapply(model,AnnualMax,1))
+  #modelData2<-unlist(lapply(model,AnnualMax,2))
+  #modelData3<-unlist(lapply(model,AnnualMax,3))
+  #modelData4<-unlist(lapply(model,AnnualMax,4))
+  #modelData5<-unlist(lapply(model,AnnualMax,5))
+  #modelData6<-unlist(lapply(model,AnnualMax,6))
+  #modelData7<-unlist(lapply(model,AnnualMax,7))
+  #finalDat<-cbind(modelData1,modelData2,modelData3,modelData4,modelData5,modelData6,modelData7)
+  #row.names(finalDat)<-c("Melt Period Total# of Days","Mean Annual MeltPer Length","SDev Annual, MeltPer Length",
+  #                       "Total RO as melt during MeltPer","Total RO during MeltPer","Total CFS during MeltPer",
+  #                       "Mean SWE/Melt Peak Date diff","SD SWE/Melt Peak Date","Mean SWE/RO Peak Date Diff","SD SWE/RO Peak Date Diff",
+  #                       "Mean SWE/CFS Peak Date diff","SD SWE/CFS Peak Date diff")
+  #write.csv(finalDat,paste("../runs/syn_sdc/Routput/",modelname,".csv",sep=""),row.names=T)
+  plotSDC(model)
 }
 
 
